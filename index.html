@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal de acceso</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      color: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+
+    .logo {
+      max-width: 200px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin: 0;
+      padding: 0;
+      font-size: 24px;
+    }
+
+    p {
+      font-size: 16px;
+      margin: 10px 0;
+    }
+
+    input[type="password"] {
+      font-size: 14px;
+      padding: 5px 10px;
+      margin: 10px 0;
+    }
+
+    button {
+      font-size: 14px;
+      padding: 5px 10px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #555;
+    }
+
+    .logo {
+      width: 150px; /* Ajusta el ancho del logo según sea necesario */
+      height: auto; /* Mantiene la relación de aspecto del logo */
+      display: block; /* Centra el logo horizontalmente */
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 20px; /* Ajusta el espacio debajo del logo según sea necesario */
+    }
+
+  </style>
+  <script>
+    function redirectToForm() {
+      const password = document.getElementById("password").value;
+      const formLinks = {
+        "password1": "https://LINK_AL_FORMULARIO_1",
+        "password2": "https://LINK_AL_FORMULARIO_2",
+        // Añadir más contraseñas y enlaces según sea necesario
+      };
+
+      if (formLinks.hasOwnProperty(password)) {
+        window.location.href = formLinks[password];
+      } else {
+        alert("Contraseña incorrecta. Por favor, inténtalo de nuevo.");
+      }
+    }
+  </script>
+</head>
+<body>
+  <img src="Brand.png" alt="Logo" class="logo">
+  <h1>Portal de acceso</h1>
+  <p>Introduce tu contraseña para acceder al formulario:</p>
+  <input type="password" id="password" placeholder="Contraseña">
+  <button onclick="redirectToForm()">Ingresar</button>
+</body>
+</html>
