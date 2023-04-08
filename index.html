@@ -54,27 +54,46 @@
     }
 
     .logo {
-      width: 150px; /* Ajusta el ancho del logo según sea necesario */
-      height: auto; /* Mantiene la relación de aspecto del logo */
-      display: block; /* Centra el logo horizontalmente */
+      width: 150px;
+      height: auto;
+      display: block;
       margin-left: auto;
       margin-right: auto;
-      margin-bottom: 20px; /* Ajusta el espacio debajo del logo según sea necesario */
+      margin-bottom: 20px;
     }
-
   </style>
   <script>
-    function redirectToForm() {
+    async function redirectToForm() {
       const password = document.getElementById("password").value;
-      const formLinks = {
-        "10001": "https://tally.so/r/wgarkd?id=10001",
-        "10002": "https://tally.so/r/wgarkd?id=10002",
-        "10003": "https://tally.so/r/wgarkd?id=10003",
-        // Añadir más contraseñas y enlaces según sea necesario
-      };
+      const sheetJsonLink = https://docs.google.com/spreadsheets/d/e/2PACX-1vS7zruQAKswtbqfD3JeXz3SVSBk9xSGQReiNiM8os2bsmieq8bS4_MOAfCxqR8bxILdXJA-pTOVfntK/pub?gid=0&single=true&output=json;
+      const response = await fetch(sheetJsonLink);
+      const data = await response.text();
+      const jsonResponse = JSON.parse(data.substring(data.indexOf("{"), data.lastIndexOf("}") + 1));
+      const rows = jsonResponse.table.rows;
 
-      if (formLinks.hasOwnProperty(password)) {
-        window.location.href = formLinks[password];
+      let found = false;
+      let completed = false;
+      let formLink = "";
+
+      for (const row of rows) {
+        const storedPassword = row.c[0].v;
+        const status = row.c[1].v;
+        const link = row.c[2].v;
+
+        if (storedPassword === password) {
+          found = true;
+          formLink = link;
+          completed = status === "Completado";
+          break;
+        }
+      }
+
+      if (found) {
+        if (completed) {
+          alert("El formulario ya ha sido completado.");
+        } else {
+          window.location.href = formLink;
+        }
       } else {
         alert("Contraseña incorrecta. Por favor, inténtalo de nuevo.");
       }
