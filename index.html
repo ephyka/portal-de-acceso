@@ -64,39 +64,38 @@
   </style>
   <script>
     async function redirectToForm() {
-      const password = document.getElementById("password").value;
-      const sheetJsonLink = "https://script.google.com/macros/s/AKfycbywvud7AKxZ9hJ9vAxAY7uGHhFEmQwo3mHCJ8olpuINiHHaaGYZyp5Iuo4SlN9Ls4xm/exec";
-      const response = await fetch(sheetJsonLink);
-      const jsonResponse = await response.json(); // Cambio aquí
-      const rows = jsonResponse.table.rows;
+  const password = document.getElementById("password").value;
+  const sheetJsonLink = "https://script.google.com/macros/s/AKfycbywvud7AKxZ9hJ9vAxAY7uGHhFEmQwo3mHCJ8olpuINiHHaaGYZyp5Iuo4SlN9Ls4xm/exec"; // Reemplaza "YOUR_SCRIPT_ID" con el ID de tu script
+  const response = await fetch(sheetJsonLink);
+  const data = await response.json();
+  
+  let found = false;
+  let completed = false;
+  let formLink = "";
 
-      let found = false;
-      let completed = false;
-      let formLink = "";
+  for (const row of data) {
+    const storedPassword = row[0];
+    const status = row[1];
+    const link = row[2];
 
-      for (const row of rows) {
-        const storedPassword = row.c[0].v;
-        const status = row.c[1].v;
-        const link = row.c[2].v;
-
-        if (storedPassword === password) {
-          found = true;
-          formLink = link;
-          completed = status === "Completado";
-          break;
-        }
-      }
-
-      if (found) {
-        if (completed) {
-          alert("El formulario ya ha sido completado.");
-        } else {
-          window.location.href = formLink;
-        }
-      } else {
-        alert("Contraseña incorrecta. Por favor, inténtalo de nuevo.");
-      }
+    if (storedPassword === password) {
+      found = true;
+      formLink = link;
+      completed = status === "Completado";
+      break;
     }
+  }
+
+  if (found) {
+    if (completed) {
+      alert("El formulario ya ha sido completado.");
+    } else {
+      window.location.href = formLink;
+    }
+  } else {
+    alert("Contraseña incorrecta. Por favor, inténtalo de nuevo.");
+  }
+}
   </script>
 </head>
 <body>
