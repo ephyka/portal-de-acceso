@@ -65,7 +65,7 @@
   <script>
     async function redirectToForm() {
       const password = document.getElementById("password").value;
-      const sheetJsonLink = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7zruQAKswtbqfD3JeXz3SVSBk9xSGQReiNiM8os2bsmieq8bS4_MOAfCxqR8bxILdXJA-pTOVfntK/pub?gid=0&single=true&output=json";
+      const sheetJsonLink = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7zruQAKswtbqfD3JeXz3SVSBk9xSGQReiNiM8os2bsmieq8bS4_MOAfCxqR8bxILdXJA-pTOVfntK/pub?gid=0&single=true&output=csv";
       const response = await fetch(sheetJsonLink);
       const data = await response.text();
       const jsonResponse = JSON.parse(data.substring(data.indexOf("{"), data.lastIndexOf("}") + 1));
