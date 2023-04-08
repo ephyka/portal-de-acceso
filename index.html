@@ -6,9 +6,9 @@
   <title>Portal de acceso</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f0f0f0;
-      color: #000;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -27,30 +27,46 @@
       margin: 0;
       padding: 0;
       font-size: 24px;
+      text-align: center;
     }
 
     p {
       font-size: 16px;
       margin: 10px 0;
+      text-align: center;
     }
 
     input[type="password"] {
       font-size: 14px;
       padding: 5px 10px;
       margin: 10px 0;
+      border-radius: 3px;
+      border: 1px solid #999;
+      background-color: #fff;
+      color: #333;
+      transition: border-color 0.2s ease-in-out;
+      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    input[type="password"]:focus {
+      border-color: #007aff;
+      outline: none;
     }
 
     button {
       font-size: 14px;
       padding: 5px 10px;
-      background-color: #333;
+      background-color: #007aff;
       color: #fff;
       border: none;
       cursor: pointer;
+      border-radius: 3px;
+      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.2s ease-in-out;
     }
 
     button:hover {
-      background-color: #555;
+      background-color: #0062cc;
     }
 
     .logo {
@@ -90,19 +106,21 @@
     if (completed) {
       alert("El formulario ya ha sido completado.");
     } else {
-      window.location.href = formLink;
-    }
-  } else {
-    alert("Contraseña incorrecta. Por favor, inténtalo de nuevo.");
-  }
+      window.location.href =formLink;
 }
-  </script>
+} else {
+alert("Contraseña incorrecta. Por favor, inténtalo de nuevo.");
+}
+}
+</script>
+
 </head>
 <body>
-  <img src="Brand.png" alt="Logo" class="logo">
+  <img src="https://i.imgur.com/xQ2LK3a.png" alt="Logo" class="logo">
   <h1>Portal de acceso</h1>
   <p>Introduce tu contraseña para acceder al formulario:</p>
   <input type="password" id="password" placeholder="Contraseña">
   <button onclick="redirectToForm()">Ingresar</button>
 </body>
 </html>
+
