@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal de acceso</title>
+  <style>
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+
+    .logo {
+      max-width: 200px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin: 0;
+      padding: 0;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    p {
+      font-size: 16px;
+      margin: 10px 0;
+      text-align: center;
+    }
+
+    input[type="password"] {
+      font-size: 14px;
+      padding: 5px 10px;
+      margin: 10px 0;
+      border-radius: 3px;
+      border: 1px solid #999;
+      background-color: #fff;
+      color: #333;
+      transition: border-color 0.2s ease-in-out;
+      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    input[type="password"]:focus {
+      border-color: #007aff;
+      outline: none;
+    }
+
+    button {
+      font-size: 14px;
+      padding: 5px 10px;
+      background-color: #000;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 3px;
+      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    button:hover {
+      background-color: #333;
+    }
+
+    .logo {
+      width: 150px;
+      height: auto;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 20px;
+    }
+    
+    .loading {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: none;
+    }
+
+  </style>
+  <script>
+  async function redirectToForm() {
+    // Muestra el icono de carga
+    document.getElementById("loading").style.display = "block";
+
+    const password = document.getElementById("password").value;
+    const sheetJsonLink = "https://script.google.com/macros/s/AKfycbxmSkHgVRmcYBu-uXVfMjQpe4tGHjnNjA6wx-41mx6z7Qsev7f_bkYCmwGXbh7oKkjK/exec"; // Coloca aquí la URL de tu aplicación web
+    const response = await fetch(sheetJsonLink);
+    const data = await response.json();
+
+    let found = false;
+    let completed = false;
+    let formLink = "";
+
+    for (const row of data) {
+      const storedPassword = row[0];
+      const status = row[1];
+      const link = row[2];
+
+      if (storedPassword === password) {
+        found = true;
+        formLink = link;
+        completed = status === "Completado";
+        break;
+      }
+    }
+
+    if (found) {
+      if (completed) {
+        alert("El formulario ya ha sido completado.");
+      } else {
+        window.location.href = formLink;
+      }
+    } else {
+      alert("Contraseña incorrecta. Por favor, inténtalo de nuevo.");
+    }
+
+    // Oculta el icono de carga al final de la función
+    document.getElementById("loading").style.display = "none";
+  }
+</script>
+
+</head>
+<body>
+  <img src="loading.gif" alt="Cargando..." class="loading" id="loading">
+  <img src="Brand.png" alt="Logo" class="logo">
+  <h1>Portal de acceso</h1>
+  <p>Introduce tu contraseña para acceder al formulario:</p>
+  <input type="password" id="password" placeholder="Contraseña">
+  <button onclick="redirectToForm()">Ingresar</button>
+</body>
+</html>
